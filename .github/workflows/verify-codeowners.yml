@@ -1,0 +1,41 @@
+name: Verify CODEOWNERS
+
+on:
+  pull_request:
+    paths:
+      - '.github/CODEOWNERS'
+  push:
+    paths:
+      - '.github/CODEOWNERS'
+    branches:
+      - main
+
+jobs:
+  verify-codeowners:
+    runs-on: ubuntu-latest
+    name: Verify CODEOWNERS file is valid
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Verify CODEOWNERS file exists
+        run: |
+          if [ ! -f .github/CODEOWNERS ]; then
+            echo "❌ CODEOWNERS file not found at .github/CODEOWNERS"
+            exit 1
+          fi
+          echo "✅ CODEOWNERS file exists"
+      
+      - name: Verify CODEOWNERS content
+        run: |
+          if ! grep -q "@thetallbloke" .github/CODEOWNERS; then
+            echo "❌ CODEOWNERS file does not contain @thetallbloke"
+            exit 1
+          fi
+          echo "✅ CODEOWNERS file contains @thetallbloke"
+      
+      - name: Display CODEOWNERS content
+        run: |
+          echo "📄 Current CODEOWNERS configuration:"
+          cat .github/CODEOWNERS
