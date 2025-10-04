@@ -3,7 +3,6 @@ import { NodeApiError } from 'n8n-workflow';
 import type * as sqlNS from 'mssql';
 import * as sql from 'mssql';
 
-
 // Helper: validate and quote identifiers (schema/table/column)
 function sanitizeAndBracketIdentifier(input: string): string {
 	// allow dotted identifiers like dbo.Table or MySchema.My.Table (we'll bracket each part)
